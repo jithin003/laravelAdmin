@@ -61,7 +61,26 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <label class="col-sm-2 col-form-label" for="role_id" style="padding-top:20px;">{{ __(' Role') }}</label>
+                  <div class="col-sm-7">
+                    <div class="form-group">
+                    <select class="form-control" name="role_id"  id="role_id">
+                      <option value="">--Select--</option>
+                      @foreach($roles as $role)
+                      <option value="{{$role->id}}">{{$role->name}}</option>
+                      @endForeach
+         
+                    </select>
+                    </div>
+                  </div>
+                </div>
+                <div name="inputArea" id="inputArea">
+                    
+                </div>
+                
               </div>
+              
               <div class="card-footer ml-auto mr-auto">
                 <button type="submit" class="btn btn-primary">{{ __('Add User') }}</button>
               </div>
@@ -70,5 +89,27 @@
         </div>
       </div>
     </div>
+    <script>
+         $("#role_id").change(function () {
+                var role_id = $(this).val();
+                if (role_id==3)
+                {
+                    $("#admissionArea").remove();
+                  
+                    $("#inputArea").append("<div class='row' name='admissionArea' id='admissionArea'><label for='admission' class='col-sm-2 col-form-label'>Admission Number </label> <div class='col-sm-7'><div class='form-group'> <input class='form-control'  placeholder='Confirm Password' value='' /></div></div>");
+                }
+                else if (role_id==2)
+                {
+                    $("#admissionArea").remove();
+                    $("#inputArea").append("<div class='row' name='admissionArea' id='admissionArea'><label for='admission' class='col-sm-2 col-form-label'>Empolyee Number </label> <div class='col-sm-7'><div class='form-group'> <input class='form-control'    placeholder='Confirm Password' value='' /></div></div>");
+                }
+                else
+                {
+                  $("#admissionArea").remove();
+                }
+            
+            });
+  </script>
   </div>
+ 
 @endsection

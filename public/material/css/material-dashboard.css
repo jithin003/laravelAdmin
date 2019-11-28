@@ -13151,7 +13151,7 @@ fieldset[disabled] .form-group .form-control {
   position: relative;
   color: inherit;
   height: 50px;
-  font-size: 1.125rem;
+  font-size: 1.8rem;
   line-height: 30px;
   padding: 0.625rem 0;
   font-weight: 300;
@@ -13349,7 +13349,7 @@ fieldset[disabled] .form-group .form-control {
   padding-top: 15px;
   padding-bottom: 15px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 20px;
   text-transform: uppercase;
   border-radius: 3px;
   color: #fff;

@@ -80,9 +80,9 @@
             @endif
         </div>
         <div class="col-6 text-right">
-            <a href="{{ route('register') }}" class="text-light">
+            <!-- <a href="{{ route('register') }}" class="text-light">
                 <small>{{ __('Create new account') }}</small>
-            </a>
+            </a> -->
         </div>
       </div>
     </div>

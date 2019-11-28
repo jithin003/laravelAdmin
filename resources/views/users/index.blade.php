@@ -38,6 +38,9 @@
                         {{ __('Email') }}
                       </th>
                       <th>
+                        {{ __('Role') }}
+                      </th>
+                      <th>
                         {{ __('Creation date') }}
                       </th>
                       <th class="text-right">
@@ -52,6 +55,9 @@
                           </td>
                           <td>
                             {{ $user->email }}
+                          </td>
+                          <td>
+                            {{ $user->roles->name}}
                           </td>
                           <td>
                             {{ $user->created_at->format('Y-m-d') }}

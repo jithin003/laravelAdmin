@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-
+use App\Role;
 class UserController extends Controller
 {
     /**
@@ -14,9 +14,10 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\View\View
      */
-    public function index(User $model)
+    public function index()
     {
-        return view('users.index', ['users' => $model->paginate(15)]);
+        $users = User::all();
+        return view('users.index',compact('users'));
     }
 
     /**
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create',compact('roles'));
     }
 
     /**
@@ -36,10 +38,27 @@ class UserController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserRequest $request, User $model)
+    public function store(UserRequest $request)
     {
-        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
-
+       
+    //     $request->merge(['password' => Hash::make($request->get('password'))]);
+    //     $request->merge(['role_id' => (int)($request->get('role_id'))]);
+    //     //')),'role_id' => $request->get('role')
+    //    //return $request->all();
+    //     $model->create($request->all());
+        $user = new User;
+  
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->password = Hash::make($request->get('password'));
+      $user->role_id = $request->role_id;
+     
+      //$user->slug = $user->makeSlug($name);
+      //$user->first_name = $request->first_name;
+      //$user->middle_name = $request->middle_name;
+      //$user->last_name = $request->last_name;
+     
+      $user->save();
         return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
 
