@@ -30,4 +30,9 @@ class NotificationController extends BaseController
                     return $this->sendResponse($notification, 'User Notifications.');
         }
     }
+
+    public function deleteUserNotification(Request $request)
+    {
+        
+    }
 }
