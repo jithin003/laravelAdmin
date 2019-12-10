@@ -20,8 +20,10 @@ Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('user/profile', 'API\UserController@details');
-Route::get('user/profile','API\UserController@update');
-// Route::put('user/profile','API\UserController@update');
+//Route::get('user/profile','API\UserController@update');
+Route::put('user/profile-update','API\UserController@update');
+Route::get('user/notification','API\NotificationController@getNotification');
+Route::get('course/{course}/date/{date}/students','API\AttendanceController@getStudents');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

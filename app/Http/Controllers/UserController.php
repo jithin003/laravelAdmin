@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Student;
+use App\Staff;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Role;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 class UserController extends Controller
 {
     /**
@@ -44,7 +49,8 @@ class UserController extends Controller
     //     $request->merge(['password' => Hash::make($request->get('password'))]);
     //     $request->merge(['role_id' => (int)($request->get('role_id'))]);
     //     //')),'role_id' => $request->get('role')
-    //    //return $request->all();
+    // dd($request->file('image'));
+        //return $request->all();
     //     $model->create($request->all());
         $user = new User;
   
@@ -52,13 +58,65 @@ class UserController extends Controller
       $user->email = $request->email;
       $user->password = Hash::make($request->get('password'));
       $user->role_id = $request->role_id;
-     
+      $user->phone = $request->mobile;
+      if($request->file('image'))
+      {
+          $imageName = time().'.'.$request->image->getClientOriginalExtension();
+          $request->image->move(public_path('/uploadedimages'), $imageName);
+          $user->image = $imageName;
+      }
+      
       //$user->slug = $user->makeSlug($name);
       //$user->first_name = $request->first_name;
       //$user->middle_name = $request->middle_name;
       //$user->last_name = $request->last_name;
      
       $user->save();
+      if($request->role_id==3)
+      {
+        $student = new Student;
+        $student->admission_no = $request->admission;
+        //$student->roll_no = $request->roll_no;
+        $student->course_id = (int)$request->course;
+  
+        //$student->academic_id = (int)$request->academic_id;
+      //   $student->course_parent_id = (int)$request->course_parent_id;
+        
+  
+        
+        $student->date_of_join = $request->date_of_join;
+     
+        //$student->current_year = $current_year;
+        //$student->current_semister = $current_semister;
+        $student->user_id = $user->id;
+  
+        $student->save();
+  
+      }
+      elseif($request->role_id==2)
+      {
+        $staff = new Staff;
+        $staff->job_title = $request->job;
+        $staff->qualification = $request->qualification;
+        //$student->academic_id = (int)$request->academic_id;
+      //   $student->course_parent_id = (int)$request->course_parent_id;
+        $staff->date_of_join = $request->dateofjoin;;
+        //$staff->total_experience = $request->experience;
+     
+        //$student->current_year = $current_year;
+        //$student->current_semister = $current_semister;
+        $staff->user_id = $user->id;
+  
+        $staff->save();
+  
+  
+      }
+      else
+      {
+
+      }
+     
+     
         return redirect()->route('user.index')->withStatus(__('User successfully created.'));
     }
 
@@ -102,5 +160,52 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
+    }
+
+        /**
+
+    * @return \Illuminate\Support\Collection
+
+    */
+
+    public function importExportView()
+
+    {
+
+       return view('users.importuser');
+
+    }
+
+   
+
+    /**
+
+    * @return \Illuminate\Support\Collection
+
+    */
+
+    public function export() 
+
+    {
+
+        return Excel::download(new UsersExport, 'users.xlsx');
+
+    }
+
+   
+
+    /**
+
+    * @return \Illuminate\Support\Collection
+
+    */
+
+    public function import() 
+
+    {
+
+        Excel::import(new UsersImport,request()->file('file'));
+        return back();
+
     }
 }

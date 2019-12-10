@@ -35,10 +35,6 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('pages.map');
 	})->name('map');
 
-	Route::get('notifications', function () {
-		return view('pages.notifications');
-	})->name('notifications');
-
 	Route::get('rtl-support', function () {
 		return view('pages.language');
 	})->name('language');
@@ -46,12 +42,41 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('upgrade', function () {
 		return view('pages.upgrade');
 	})->name('upgrade');
+	Route::get('importExportView', 'UserController@importExportView')->name('importview');
+
+	Route::get('export', 'UserController@export')->name('export');
+
+	Route::post('import', 'UserController@import')->name('import');
+
+	Route::get('usercourse', 'CourseController@index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
+	//course
+	Route::get('course', 'CourseController@show')->name('course');
+	Route::get('course/create', 'CourseController@create')->name('course.create');
+	Route::post('course', 'CourseController@store')->name('course.store');
+	Route::get('course/{id}/edit', 'CourseController@edit')->name('course.edit');
+	Route::put('course/{id}', 'CourseController@update')->name('course.update');
+	Route::delete('course/{id}', 'CourseController@destroy')->name('course.destroy');
+	///Profile
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+	//Notifications
+	Route::get('notifications', function () {
+		return view('notification.dashboard');
+	})->name('notifications');
+
+	Route::get('notification/create', function () {
+		return view('notification.create');
+	})->name('notification.create');
+	Route::post('notification', 'NotificationController@store')->name('notification.store');
+	Route::get('notification/{id}/edit', 'CourseController@edit')->name('notification.edit');
+	Route::put('notification/{id}', 'NotificationController@update')->name('notification.update');
+	Route::delete('notification/{id}', 'NotificationController@destroy')->name('notification.destroy');
+	Route::get('notification/list/{type}','NotificationController@index')->name('notification.list');
 });
 

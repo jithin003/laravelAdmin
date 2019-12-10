@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $table = 'courses';
- 
+    public function getUpdatedAtColumn() {
+        return null;
+    }
+    public function setUpdatedAt($value)
+
+    {
+
+      return NULL;
+
+    }
+    
+
+
     public function exams()
     {
         return $this->belongsToMany('App\Exam', 'course_exam');

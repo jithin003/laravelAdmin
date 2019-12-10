@@ -4,7 +4,7 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
@@ -22,8 +22,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
               <div class="card-icon">
@@ -38,8 +38,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-danger card-header-icon">
               <div class="card-icon">
@@ -54,8 +54,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-info card-header-icon">
               <div class="card-icon">
@@ -70,9 +70,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-4">
           <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -122,30 +122,30 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-12 col-md-12">
           <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
               <div class="nav-tabs-navigation">
                 <div class="nav-tabs-wrapper">
-                  <span class="nav-tabs-title">Tasks:</span>
+                  <span class="nav-tabs-title">Notifications:</span>
                   <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item">
                       <a class="nav-link active" href="#profile" data-toggle="tab">
-                        <i class="material-icons">bug_report</i> Bugs
+                        <i class="material-icons">bug_report</i> All
                         <div class="ripple-container"></div>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#messages" data-toggle="tab">
-                        <i class="material-icons">code</i> Website
+                        <i class="material-icons">code</i> Staff
                         <div class="ripple-container"></div>
                       </a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#settings" data-toggle="tab">
-                        <i class="material-icons">cloud</i> Server
+                        <i class="material-icons">cloud</i> Student
                         <div class="ripple-container"></div>
                       </a>
                     </li>
@@ -369,47 +369,157 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-12 col-md-12">
           <div class="card">
-            <div class="card-header card-header-warning">
-              <h4 class="card-title">Employees Stats</h4>
-              <p class="card-category">New employees on 15th September, 2016</p>
+            <div class="card-header card-header-tabs card-header-success">
+              <h4 class="card-title">Users</h4>
+              <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                  <!-- <span class="nav-tabs-title">Tasks:</span> -->
+                  <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#alluser" data-toggle="tab">
+                        <i class="material-icons">face</i> All Users
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#students" data-toggle="tab">
+                        <i class="material-icons">people</i> Students
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#staff" data-toggle="tab">
+                        <i class="material-icons">school</i> Staff
+                        <div class="ripple-container"></div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <div class="card-body table-responsive">
+            <div class="tab-content">
+              <div class="tab-pane active" id="alluser">
+
               <table class="table table-hover">
                 <thead class="text-warning">
                   <th>ID</th>
                   <th>Name</th>
-                  <th>Salary</th>
-                  <th>Country</th>
+                  <th>Role</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Created At</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Minerva Hooper</td>
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Sage Rodriguez</td>
-                    <td>$56,142</td>
-                    <td>Netherlands</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td>Philip Chaney</td>
-                    <td>$38,735</td>
-                    <td>Korea, South</td>
-                  </tr>
+                @foreach($users as $user)
+                        <tr>
+                       
+                          <td>
+                            {{ $user->id }}
+                          </td>
+                          <td>
+                          <a href=""> {{ $user->name }}</a>
+                           
+                          </td>
+                          <td>
+                            {{ $user->roles->name}}
+                          </td>
+                          <td>
+                            {{ $user->email}}
+                          </td>
+                          <td>
+                            {{ $user->phone}}
+                          </td>
+                          <td>
+                            {{ $user->created_at->format('Y-m-d') }}
+                          </td>
+                          
+                          </tr>
+                @endforeach
                 </tbody>
               </table>
+               </div>
+               <div class="tab-pane" id="students">
+
+                    <table class="table table-hover">
+                      <thead class="text-warning">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Created At</th>
+                      </thead>
+                      <tbody>
+                      @foreach($users as $user)
+                          @if($user->role_id==3)
+                                  <tr>
+                                    <td>
+                                      {{ $user->id }}
+                                    </td>
+                                    <td>
+                                      {{ $user->name }}
+                                    </td>
+                                    <td>
+                                    {{ $user->roles->name}}
+                                    </td>
+                                    <td>
+                                      {{ $user->email}}
+                                    </td>
+                                    <td>
+                                      {{ $user->phone}}
+                                    </td>
+                                    <td>
+                                      {{ $user->created_at->format('Y-m-d') }}
+                                    </td>
+                                  </tr>
+                          @endif
+                      @endforeach
+                      </tbody>
+                    </table>
+                    </div>
+                    <div class="tab-pane" id="staff">
+
+                      <table class="table table-hover">
+                        <thead class="text-warning">
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Role</th>
+                          <th>Email</th>
+                          <th>Mobile</th>
+                          <th>Created At</th>
+                        </thead>
+                        <tbody>
+                        @foreach($users as $user)
+                           @if($user->role_id==2)
+                                <tr>
+                                  <td>
+                                    {{ $user->id }}
+                                  </td>
+                                  <td>
+                                    {{ $user->name }}
+                                  </td>
+                                  <td>
+                                  {{ $user->roles->name}}
+                                  </td>
+                                  <td>
+                                    {{ $user->email}}
+                                  </td>
+                                  <td>
+                                    {{ $user->phone}}
+                                  </td>
+                                  <td>
+                                    {{ $user->created_at->format('Y-m-d') }}
+                                  </td>
+                                </tr>
+                           @endif
+                        @endforeach
+                        </tbody>
+                      </table>
+                      </div>
+              </div>
             </div>
           </div>
         </div>
