@@ -2202,6 +2202,7 @@ select.form-control:focus::-ms-value {
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.5;
+  color : black;
 }
 
 .col-form-label-lg {

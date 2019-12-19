@@ -81,10 +81,22 @@
             <p>{{ __('Maps') }}</p>
         </a>
       </li> -->
-      <li class="nav-item{{ $activePage == 'notifications' ? ' active' : '' }}">
+      <li class="nav-item{{ $activePage == 'notification' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('notifications') }}">
           <i class="material-icons">notifications</i>
           <p>{{ __('Notifications') }}</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'attendance' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('attendance') }}">
+          <i class="material-icons">add</i>
+          <p>{{ __('Attendance') }}</p>
+        </a>
+      </li>
+      <li class="nav-item{{ $activePage == 'exam' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('exam') }}">
+          <i class="material-icons">school</i>
+          <p>{{ __('Exam') }}</p>
         </a>
       </li>
       <!-- <li class="nav-item{{ $activePage == 'language' ? ' active' : '' }}">

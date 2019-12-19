@@ -78,5 +78,23 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('notification/{id}', 'NotificationController@update')->name('notification.update');
 	Route::delete('notification/{id}', 'NotificationController@destroy')->name('notification.destroy');
 	Route::get('notification/list/{type}','NotificationController@index')->name('notification.list');
+
+	//Attendance
+	Route::get('attendance', function () {
+		return view('attendance.dashboard');
+	})->name('attendance');
+	Route::get('attendance/list','AttendanceController@index')->name('attendance.list');
+	Route::get('attendance/create','AttendanceController@index')->name('attendance.create');
+
+	//Exam
+	Route::get('exam', function () {
+		return view('exam.dashboard');
+	})->name('exam');
+	Route::get('exam/list','ExamController@index')->name('exam.list');
+	Route::get('exam/create','ExamController@createExam')->name('exam.create');
+	Route::get('question/list','ExamController@index')->name('question.list');
+	Route::get('question/create','ExamController@createQuestion')->name('question.create');
+	Route::post('exam','ExamController@storeExam')->name('exam.store');
+
 });
 

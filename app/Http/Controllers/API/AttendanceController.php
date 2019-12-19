@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\StudentAttendance;
+use App\Attendance;
+use App\User;
 use App\Http\Controllers\API\BaseController as BaseController;
 class AttendanceController extends BaseController
 {
@@ -23,7 +26,7 @@ class AttendanceController extends BaseController
                 
         //sql='SELECT  * FROM students s JOIN users u ON u.id=s.user_id LEFT JOIN attendance_status ast ON ast.course_id=s.course_id   AND  date(ast.attendance_date)=date(?)  LEFT JOIN student_attendance sa ON sa.user_id=s.user_id AND sa.status=0 AND date(sa.attendance_date)=date(?) WHERE  s.course_id=?';
         //return $result=DB::select("SELECT  * FROM students s JOIN users u ON u.id=s.user_id LEFT JOIN attendance ast ON ast.course_id=s.course_id   AND  date(ast.attendance_date)=".$date." LEFT JOIN student_attendance sa ON sa.user_id=s.user_id AND date(sa.attendance_date)=".$date." WHERE  s.course_id=".$course);
-        $results=DB::select("SELECT u.id,s.admission_no,u.name,u.image,u.house_name,u.street,u.post_office,u.state,u.pin,u.phone,u.mothers_name,u.fathers_name,ast.attendance_date,sa.attendance_date as absent_date FROM students s JOIN users u ON u.id=s.user_id LEFT JOIN attendance ast ON ast.course_id=s.course_id  AND  date(ast.attendance_date)=$date LEFT JOIN student_attendance sa ON sa.user_id=s.user_id AND date(sa.attendance_date)=$date WHERE  s.course_id=$course");
+        $results=DB::select("SELECT u.id,s.admission_no,u.name,u.image,u.house_name,u.street,u.post_office,u.state,u.pin,u.phone,u.mothers_name,u.fathers_name,ast.attendance_date,sa.attendance_date as absent_date FROM students s JOIN users u ON u.id=s.user_id LEFT JOIN attendance ast ON ast.course_id=s.course_id  AND  date(ast.attendance_date)=:dat LEFT JOIN student_attendance sa ON sa.user_id=s.user_id AND date(sa.attendance_date)=:dat1 WHERE  s.course_id=:id ORDER BY u.name",['id' => $course,'dat'=>$date,'dat1'=>$date]);
         // DB::table('students')
         // ->join('users', 'users.id', '=', 'students.user_id')
         // ->leftjoin('attendance_status', 'attendance_status.course_id', '=', 'students.course_id')
@@ -63,6 +66,91 @@ class AttendanceController extends BaseController
         //return $students;
                     return $this->sendResponse($students, 'Students.');
         }
+    }
+
+    public function setAttendance(Request $request,$course,$date)
+    {
+        
+        $authuser = Auth::user(); 
+        //$sql=DB::select("select * from attendance where date(attendance_date)=date($date) and course_id=$course");
+        $sq = Attendance::where('attendance_date',$date)
+                        ->where('course_id',$course)
+                        ->get();
+               $query=Attendance::whereRaw('attendance_date = ? and course_id = ?', [$date,$course])->get();
+        //return $query;
+        if($sq->count()>0)
+        {
+            $students=$request->json()->get('data');;
+            $deletedRows = StudentAttendance::where('attendance_date', $date)
+                                            ->where('course_id',$course)
+                                            ->delete();
+                foreach($students as $student)
+                {
+                    if($student['status']==false)
+                    {
+                        //$result = $this->insertAbsent($student,$course,$date);
+                        $studentAttendance = new StudentAttendance;
+                        $studentAttendance->user_id = $student['user_id'];
+                        $studentAttendance->course_id = $course;
+                        $studentAttendance->attendance_date = $date;
+                        $studentAttendance->save();
+                    }
+                    
+                }
+            return $this->sendResponse($students, 'Attendance Updated Successfully.');
+            
+        }
+        else
+        {
+            $students=$request->json()->get('data');
+            $data=[];
+            $attendance = new Attendance;
+            $attendance->course_id = $course;
+            $attendance->attendance_date = $date;
+            $attendance->updated_by = $authuser->id; 
+            $attendance->save();
+            //return $attendance->id;
+          
+            if($attendance)
+            { 
+                 //$students = $request->data;
+                 $students=$request->json()->get('data');
+                $count=0;
+               //return $students;
+                foreach($students as $student)
+                {
+                    
+                    if($student['status']==false)
+                    {
+                    //      $data = User::where('id', $student['user_id'])->first();
+                    // return $data;
+                       // $result = $this->insertAbsent($student,$course,$date);
+                       $studentAttendance = new StudentAttendance;
+                       $studentAttendance->user_id = $student['user_id'];
+                       $studentAttendance->course_id = $course;
+                       $studentAttendance->attendance_date = $date;
+                       $studentAttendance->save();
+                       $count++;
+                        
+                    }
+                    
+                }
+                return $this->sendResponse($count, 'Attendance Inserted Successfully.');
+            }
+            return $this->sendResponse($students, 'Error.');
+
+        }
+    }
+    public function insertAbsent($student,$course,$date)
+    {
+       //$sql='select * from attendance_status where date(attendance_date)=date(?) and course_id=? ';
+                        $studentAttendance = new StudentAttendance;
+                        $studentAttendance->user_id = $student->user_id;
+                        $studentAttendance->course_id = $course;
+                        $studentAttendance->attendance_date = date($date);
+                        $studentAttendance->save();
+                        return $studentAttendance;
+       
     }
 
 }
