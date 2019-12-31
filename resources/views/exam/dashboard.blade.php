@@ -69,7 +69,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                     <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header card-header-info">
+                                
+                            </div>
+                            <div class="card-body " align="center">
+                                <i class="material-icons">add</i>
+                                <h4 class="card-title ">{{ __('Allocate Exam To Course') }}</h4>
+                                <p class="card-category"> {{ __('Add exams to courses') }}</p>
+                                <a href="{{ route('question.create') }}" class="btn btn-sm btn-primary">{{ __('ADD') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-4">
                         <div class="card">
                             <div class="card-header card-header-info">
                                 
@@ -81,7 +94,7 @@
                                 <a href="{{ route('question.create') }}" class="btn btn-sm btn-primary">{{ __('ADD') }}</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
               </div>
             </div>

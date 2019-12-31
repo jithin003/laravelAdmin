@@ -53,13 +53,22 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
-	//course
+	//Subject or Category
+	Route::get('subject', 'CategoryController@show')->name('subject');
+	Route::get('subject/create', 'CategoryController@create')->name('subject.create');
+	Route::post('subject', 'CategoryController@store')->name('subject.store');
+	Route::get('subject/{id}/edit', 'CategoryController@edit')->name('subject.edit');
+	Route::put('subject/{id}', 'CategoryController@update')->name('subject.update');
+	Route::delete('subject/{id}', 'CategoryController@destroy')->name('subject.destroy');
+
+	///course
 	Route::get('course', 'CourseController@show')->name('course');
 	Route::get('course/create', 'CourseController@create')->name('course.create');
 	Route::post('course', 'CourseController@store')->name('course.store');
 	Route::get('course/{id}/edit', 'CourseController@edit')->name('course.edit');
 	Route::put('course/{id}', 'CourseController@update')->name('course.update');
 	Route::delete('course/{id}', 'CourseController@destroy')->name('course.destroy');
+
 	///Profile
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
@@ -92,9 +101,16 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('exam');
 	Route::get('exam/list','ExamController@index')->name('exam.list');
 	Route::get('exam/create','ExamController@createExam')->name('exam.create');
-	Route::get('question/list','ExamController@index')->name('question.list');
+	Route::get('question/list','ExamController@questionIndex')->name('question.list');
 	Route::get('question/create','ExamController@createQuestion')->name('question.create');
 	Route::post('exam','ExamController@storeExam')->name('exam.store');
-
+	Route::post('question/stote','ExamController@storeQuestion')->name('question.store');
+	Route::delete('exam/{id}', 'ExamController@destroy')->name('exam.destroy');
+	Route::get('exam/{id}/edit', 'ExamController@edit')->name('exam.edit');
+	Route::get('exam/{id}/addquestion', 'ExamController@addquestion')->name('exam.addquestion');
+	Route::get('exam/{id}/view', 'ExamController@viewExam')->name('exam.view');
+	Route::post('examquestion/stote','ExamController@storeExamQuestion')->name('examquestion.store');
+	Route::get('exam/course', 'ExamController@getExamCourse')->name('exam.addcourse');
+	Route::post('exam/course', 'ExamController@setExamCourse')->name('exam.addcourse');
 });
 

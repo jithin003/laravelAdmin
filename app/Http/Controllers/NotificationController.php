@@ -38,7 +38,8 @@ class NotificationController extends Controller
         {
             $imageName = time().'.'.$request->image->getClientOriginalExtension();
             $request->image->move(public_path('/uploadedimages'), $imageName);
-            $notification->image = $imageName;
+            //$image = base64_encode(file_get_contents($request->file('image')));
+            $notification->image = url('/').'/uploadedimages/'.$imageName;
         }
         
       //$user->slug = $user->makeSlug($name);

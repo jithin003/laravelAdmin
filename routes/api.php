@@ -18,16 +18,26 @@ header('Access-Control-Allow-Headers:  Content-Type, enctype, X-Auth-Token, X-Re
 
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
+
 Route::group(['middleware' => 'auth:api'], function(){
 Route::post('user/profile', 'API\UserController@details');
 //Route::get('user/profile','API\UserController@update');
 Route::put('user/profile-update','API\UserController@update');
+////////////////////************NOTIFICATION SECTION ******************************////////////
 Route::get('user/notification','API\NotificationController@getNotification');
 Route::post('user/notification/create','API\NotificationController@store');
 Route::post('user/image/upload','API\NotificationController@file_store');
+Route::delete('user/notification/{id}/delete','API\NotificationController@deleteUserNotification');
+Route::delete('user/notification/{id}/all/delete','API\NotificationController@deleteAllNotification');
+////////////////////************COURSE SECTION ******************************////////////
 Route::get('course/{course}/date/{date}/students','API\AttendanceController@getStudents');
 Route::post('course/{course}/date/{date}/attendance','API\AttendanceController@setAttendance');
 Route::get('course', 'CourseController@index');
+////////////////////************EXAM SECTION ******************************////////////
+Route::get('teacher/exams','API\ExamController@teacherExam');
+Route::get('student/course/{course}/exams','API\ExamController@index');
+Route::get('exam/{exam}/questions','API\ExamController@questionIndex');
+Route::post('exam/{exam}/answers','API\ExamController@storeUserAnswer');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

@@ -70,6 +70,11 @@
                                     <label class="control-label" style="color:black;">Duration of the Exam</label>
                                     <input type="number" name="duration" placeholder="Duration in Minutes" class="form-control" min="1"  required>
                                 </div>
+                                <div class="form-group" style="padding-top:15px;">
+                               
+                               <label class="control-label" style="color:black;">Is the exam question is time bounded?</label> <input type="checkbox"  name="type" value="">
+                                    
+                                </div>
                                 <input type="hidden" name="status" value="1" />
                                 <button type="submit" class="btn btn-primary">{{ __('Add ') }}</button>
                             </form>

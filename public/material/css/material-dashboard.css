@@ -12550,7 +12550,8 @@ fieldset[disabled][disabled] .has-rose .form-control,
 
 .bmd-form-group [class^='bmd-label'],
 .bmd-form-group [class*=' bmd-label'] {
-  position: absolute;
+  /* position: absolute; */
+  color:black;
   pointer-events: none;
   transition: 0.3s ease all;
 }
@@ -18887,3 +18888,77 @@ Copyright (c) 2015 Daniel Eden
 
 
 /*# sourceMappingURL=dashboard-free.css.map */
+.question-page {
+  border: 1px solid black !important;
+  border-radius: 10px !important;
+  padding: 10px;
+}
+.upload-preview {
+  display: block;
+  max-width: 100%;
+}
+
+.upload-preview img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.preview-box {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ecf0f5;
+  color: #ecf0f1;
+  border: 2px solid #ccc;
+  background-position: center center;
+  background-size: cover;
+}
+
+.preview-box .file-input-label {
+  position: absolute;
+  z-index: 10;
+  padding: 6px 12px;
+  margin: 0px;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  max-width: none;
+  min-width: 130px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.preview-box .file-input {
+  display: none;
+}
+
+.question-card {
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+}
+
+.question-card .question {
+  font-weight: bold;
+}
+
+.question-card .answer {
+  background-color: #fcfcfc;
+  padding: 8px;
+}
+
+.question-card .correct {
+  background-color: #c8e6c9;
+  padding: 8px;
+}
+
+label {
+  font-weight: bold;
+}

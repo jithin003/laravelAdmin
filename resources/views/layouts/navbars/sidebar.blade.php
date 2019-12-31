@@ -57,6 +57,12 @@
             <p>{{ __('Course Management') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'subject' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('subject') }}">
+          <i class="material-icons">content_paste</i>
+            <p>{{ __('Subject Management') }}</p>
+        </a>
+      </li>
       <li class="nav-item{{ $activePage == 'user_import' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('importview') }}">
           <i class="material-icons">person</i>

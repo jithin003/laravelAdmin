@@ -8,4 +8,14 @@ class Category extends Model
 {
     //
     protected $table = "category";
+    public function getUpdatedAtColumn() {
+        return null;
+    }
+    public function setUpdatedAt($value)
+
+    {
+
+      return NULL;
+
+    }
 }

@@ -33,9 +33,40 @@ class NotificationController extends BaseController
         }
     }
 
-    public function deleteUserNotification(Request $request)
+    public function deleteUserNotification(Request $request,$id)
     {
-        
+        $authuser = Auth::user(); 
+        //return $id;
+        if($authuser)
+        {
+                $userNotification = User_notification::where('user_id', $authuser->id)
+                                                     ->where('notification_id',$id)
+                                                     ->delete();
+         
+                    //return $user;
+                    return $this->sendResponse($userNotification, 'User Notification Deleted.');
+        }
+        else
+        {
+            return $this->sendResponse($request, 'Not Valid.');
+        }
+    }
+    public function deleteAllNotification(Request $request,$id)
+    {
+        $authuser = Auth::user(); 
+        //return $id;
+        if($authuser)
+        {
+                $userNotification = User_notification::where('notification_id',$id)
+                                                     ->delete();
+         
+                    //return $user;
+                    return $this->sendResponse($userNotification, 'User Notification Deleted.');
+        }
+        else
+        {
+            return $this->sendResponse($request, 'Not Valid.');
+        }
     }
     public function store(Request $request)
     {
@@ -202,14 +233,14 @@ class NotificationController extends BaseController
     }
     public function file_store(Request $request)
     {
-      //return $request->all();
+      return $request;
       // print_r($request);
       //$payLoad = json_decode(request()->getContent(), true);
 
       //dd($payLoad['name']);
       $request1 = json_decode(request()->getContent(), true);
       //return $payLoad;
-        if($request->file('image'))
+        if($request->image)
         {
             //return $request->image->getClientOriginalExtension();
             $imageName = time().'.'.$request->image->getClientOriginalExtension();

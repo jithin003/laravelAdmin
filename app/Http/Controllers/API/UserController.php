@@ -22,11 +22,24 @@ class UserController extends BaseController
              */ 
             public function login(){ 
                 if(Auth::attempt(['phone' => request('mobile'), 'password' => request('password')])){ 
-                    $user = Auth::user(); 
-                    $success =  $user->createToken('Examapp'); 
+                    $authuser = Auth::user(); 
+                    $success =  $authuser->createToken('Examapp'); 
+                    if($authuser->role_id==3)
+                    {
+                        $user = DB::table('users')
+                            ->leftjoin('students', 'users.id', '=', 'students.user_id')
+                            ->where('users.id', '=',$authuser->id )
+                            ->select('students.course_id')
+                            ->get();
+                            $course = $user[0]->course_id;
+                    }
+                    else
+                    {
+                        $course = "";
+                    }
                     //$user->apitoken = $success;
                     
-                   return response()->json(['success' => $success,'user'=> $user], $this-> successStatus); 
+                   return response()->json(['success' => $success,'user'=> $authuser,'course'=>$course], $this-> successStatus); 
            
                     //return $this->sendResponse($success, 'Login Successfully.');
                 } 
