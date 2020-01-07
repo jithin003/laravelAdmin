@@ -61,7 +61,7 @@ class ExamController extends Controller
                 $exam_course->save();
             }
         }
-        return redirect()->back()->withStatus(__('Notification Successfully Delivered.'));
+        return redirect()->back()->withStatus(__('Exam Successfully Stored.'));
        
     }
 
@@ -72,8 +72,36 @@ class ExamController extends Controller
                      ->join('courses','courses.id','exam_courses.course_id')
                      ->get();
         $courses  = Course::all();
+       
         return view('exam.create',compact('exams','courses'));
     }
+
+    public function edit($id)
+    {
+        $exams = Exam::join('exam_courses','exams.id','exam_courses.exam_id')
+                    ->join('courses','courses.id','exam_courses.course_id')
+                    ->get();
+        $courses  = Course::all();
+        $exam  = Exam::find($id);
+                    
+        return view('exam.edit',compact('exam','exams','courses'));
+    }
+
+    public function update(Request $request,$exam)
+    {
+        $authuser = Auth::user();
+        $examobj = Exam::find($exam);
+        $examobj->title = $request->name;
+        $examobj->duration = $request->duration;
+        $examobj->question_count = $request->count;
+        $examobj->correct_mark = $request->correct_mark;
+        $examobj->negative_mark = $request->incorrect_mark;
+        $examobj->cutoff = $request->cuttoff;
+        $examobj->created_by = $authuser->id;
+        $examobj->save();
+        return redirect()->back()->withStatus(__('Exam Successfully Updated.'));
+    }
+
     public function createQuestion(Request $request)
     {
         $subjects  = Category::all();
@@ -444,12 +472,49 @@ class ExamController extends Controller
     public function destroy($id)
     {
         
-        $eamcourse = ExamCourse::where('exam_id',$id)
+        $examcourse = ExamCourse::where('exam_id',$id)
                                 ->delete();
                                 //return $eamcourse;
         $cobj = Exam::find($id);
         $cobj->delete();
 
         return redirect()->route('exam')->withStatus(__('Exam successfully deleted.'));
+    }
+    public function removeQuestion($id,$qid)
+    {
+        $exam_question = ExamQuestion::where('exam_id',$id)
+                                     ->where('question_id',$qid)
+                                     ->delete();
+        return redirect()->back()->withStatus(__('Question successfully removed.'));
+    }
+
+    public function getReportView($id)
+    {
+        $exam = Exam::join('exam_courses','exams.id','exam_courses.exam_id')
+                     ->join('courses','courses.id','exam_courses.course_id')
+                     ->where('exams.id','=',$id)
+                     ->get();
+        return view('exam.report',compact('exam'));
+
+
+    }
+    public function getReport($exam,$course)
+    {
+        $reports = DB::select('SELECT ua.user_id,ua.score,ua.is_pass,ua.is_complete FROM user_attempt ua JOIN students s ON ua.user_id=s.user_id AND s.course_id=:course JOIN exam_courses ec ON ec.exam_id=ua.exam_id AND ec.course_id=s.course_id JOIN (SELECT MIN(id) as id FROM user_attempt WHERE exam_id= :exam  GROUP BY user_id) AS fa ON ua.id=fa.id WHERE ua.exam_id=:examid AND unix_timestamp(ua.created_at) <= unix_timestamp(DATE_ADD(ec.live_on,INTERVAL ec.validity DAY)) ', ['course' => $course,'exam' => $exam,'examid' => $exam]);
+        
+        $exam_report=[];
+        foreach($reports as $report)
+        {
+                $data['user_id'] = $report->user_id;
+                $data['score'] = $report->score;
+                $data['is_pass'] = $report->is_pass?'Pass':'Fail';
+                $user = User::find($report->user_id);
+                $data['name'] = $user->name;
+                $data['is_complete'] = $report->is_complete;
+               
+                array_push($exam_report, $data);
+        }
+        return $exam_report;
+
     }
 }

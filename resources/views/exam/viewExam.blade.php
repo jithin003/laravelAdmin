@@ -49,7 +49,7 @@ a+a {
                   <div class="col-md-12">
                   @foreach($examquestions as $question)
                                 <div class="question-card">
-                                    <p class="question">{{$question->question}}</p>
+                                    <p class="question">{{ $loop->iteration }}<b style="padding-right:10px;">)</b>{{$question->question}}</p>
                                   
                                     <div class="row">
                                     @foreach ($question->getChoices($question->id) as $answer)
@@ -64,11 +64,18 @@ a+a {
                                     @endforeach
                                     </div>
                                     <a href="" class="btn btn-success">Edit Question</a>
-                                    <form method="POST" class="d-inline">
-                                        <input type="hidden" name="id" value="">
-                                        <input type="submit" value="Delete" name="delete" class="btn btn-danger">
+                                    <form action="{{ route('question.removequestion', [$exam,$question]) }}" method="post" class="d-inline">
+                                      @csrf
+                                      @method('delete')
+                                        <!-- <input type="hidden" name="id" value="">
+                                        <input type="submit" value="Delete" name="delete" class="btn btn-danger"> -->
+                                        <button type="button" class="btn btn-danger " data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this question?") }}') ? this.parentElement.submit() : ''">
+                                         Delete   
+                                          <div class="ripple-container"></div>
+                                        </button>
                                     </form>
                                 </div>
+                                <hr>
                   @endforeach
                   
                   </div>

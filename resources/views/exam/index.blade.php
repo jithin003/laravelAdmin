@@ -89,26 +89,50 @@
                               <form action="{{ route('exam.destroy', $exam) }}" method="post">
                                   @csrf
                                   @method('delete')
-                                  <a rel="tooltip" class="btn btn-info " href="{{ route('exam.addquestion', $exam) }}" data-original-title="" title="">
-                                   Add Question
-                                    <div class="ripple-container"></div>
-                                  </a>
-                                  <a rel="tooltip" class="btn btn-info " href="{{ route('exam.addcourse') }}" data-original-title="" title="">
-                                   Add To Course
-                                    <div class="ripple-container"></div>
-                                  </a>
-                                  <a rel="tooltip" class="btn btn-warning " href="{{ route('exam.view', $exam) }}" data-original-title="" title="">
-                                     View 
-                                    <div class="ripple-container"></div>
-                                  </a>
-                                  <a rel="tooltip" class="btn btn-success " href="{{ route('exam.edit', $exam) }}" data-original-title="" title="">
-                                     Edit  
-                                    <div class="ripple-container"></div>
-                                  </a>
-                                  <button type="button" class="btn btn-danger " data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this exam?") }}') ? this.parentElement.submit() : ''">
-                                         Delete   
-                                      <div class="ripple-container"></div>
-                                  </button>
+                                  <div class="row">
+                                    <div class="col-sm-1">
+                                      <a rel="tooltip" class="btn btn-warning " href="{{ route('exam.view', $exam) }}" data-original-title="" title="">
+                                        View 
+                                        <div class="ripple-container"></div>
+                                      </a>
+                                    </div>
+                                    <div class="col-sm-1">
+                                      <a rel="tooltip" class="btn btn-success " href="{{ route('exam.edit', $exam) }}" data-original-title="" title="">
+                                          Edit  
+                                          <div class="ripple-container"></div>
+                                      </a>
+                                    </div>
+                                    <div class="col-sm-1">
+                                      <button type="button" class="btn btn-danger " data-original-title="" title="" onclick="confirm('{{ __("Are you sure you want to delete this exam?") }}') ? this.parentElement.submit() : ''">
+                                              Delete   
+                                            <div class="ripple-container"></div>
+                                      </button>
+                                    </div>
+                                    <div class="col-sm-3">
+                                      <a rel="tooltip" class="btn btn-info " href="{{ route('exam.addquestion', $exam) }}" data-original-title="" title="">
+                                          Add Question
+                                            <div class="ripple-container"></div>
+                                      </a>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a rel="tooltip" class="btn btn-primary " href="{{ route('exam.addcourse') }}" data-original-title="" title="">
+                                          Add To Course
+                                          <div class="ripple-container"></div>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a rel="tooltip" class="btn btn-info " href="{{ route('exam.report', $exam) }}" data-original-title="" title="">
+                                          Exam Report 
+                                          <div class="ripple-container"></div>
+                                        </a>
+                                    </div>
+                                  </div>
+                                  <!-- //******* */ -->
+                                  <div class="row">
+                                   
+                                  </div>
+                                 
+
                               </form>
                           </td>
                         </tr>

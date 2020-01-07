@@ -33,11 +33,22 @@ Route::delete('user/notification/{id}/all/delete','API\NotificationController@de
 Route::get('course/{course}/date/{date}/students','API\AttendanceController@getStudents');
 Route::post('course/{course}/date/{date}/attendance','API\AttendanceController@setAttendance');
 Route::get('course', 'CourseController@index');
+
+////////////////////************SUBJECT ***********************************/////////////
+Route::get('subjects','CategoryController@index');
+////////////////////************CLASS NOTES ***********************************/////////////
+Route::get('subject/{subject}/notes','API\ClassNoteController@getclassNotes');
+Route::post('user/note/create','API\ClassNoteController@store');
+Route::delete('user/note/{id}/delete','API\ClassNoteController@deleteUserNotes');
+Route::delete('user/notification/{id}/all/delete','API\NotificationController@deleteAllNotification');
 ////////////////////************EXAM SECTION ******************************////////////
 Route::get('teacher/exams','API\ExamController@teacherExam');
 Route::get('student/course/{course}/exams','API\ExamController@index');
 Route::get('exam/{exam}/questions','API\ExamController@questionIndex');
 Route::post('exam/{exam}/answers','API\ExamController@storeUserAnswer');
+Route::get('exam/{exam}/toppers','API\ExamController@examToppers');
+Route::get('exam/{exam}/report','API\ExamController@examReport');
+Route::get('exam/{examid}/course/{courseid}/report','ExamController@getReportByCourse');
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

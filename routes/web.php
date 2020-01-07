@@ -107,10 +107,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('question/stote','ExamController@storeQuestion')->name('question.store');
 	Route::delete('exam/{id}', 'ExamController@destroy')->name('exam.destroy');
 	Route::get('exam/{id}/edit', 'ExamController@edit')->name('exam.edit');
+	Route::post('exam/{id}/update', 'ExamController@update')->name('exam.update');
 	Route::get('exam/{id}/addquestion', 'ExamController@addquestion')->name('exam.addquestion');
 	Route::get('exam/{id}/view', 'ExamController@viewExam')->name('exam.view');
+	Route::delete('exam/{id}/question/{qid}', 'ExamController@removeQuestion')->name('question.removequestion');
 	Route::post('examquestion/stote','ExamController@storeExamQuestion')->name('examquestion.store');
+	Route::put('exam/{id}/editquestion','ExamController@updateExamQuestion')->name('examquestion.update');
 	Route::get('exam/course', 'ExamController@getExamCourse')->name('exam.addcourse');
 	Route::post('exam/course', 'ExamController@setExamCourse')->name('exam.addcourse');
+	Route::get('exam/{id}/report','ExamController@getReportView')->name('exam.report');
+	Route::get('exam/{examid}/course/{courseid}/report','ExamController@getReport');
 });
 

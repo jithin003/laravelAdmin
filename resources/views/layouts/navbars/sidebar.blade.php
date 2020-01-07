@@ -21,7 +21,8 @@
       </li>
       <li class="nav-item {{ ($activePage == 'profile' || $activePage == 'user-management') ? ' active' : '' }}">
         <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="false">
-          <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
+          <!-- <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i> -->
+          <i class="material-icons">face</i>
           <p>{{ __('User Management') }}
             <b class="caret"></b>
           </p>
@@ -59,7 +60,7 @@
       </li>
       <li class="nav-item{{ $activePage == 'subject' ? ' active' : '' }}">
         <a class="nav-link" href="{{ route('subject') }}">
-          <i class="material-icons">content_paste</i>
+          <i class="material-icons">book</i>
             <p>{{ __('Subject Management') }}</p>
         </a>
       </li>

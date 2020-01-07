@@ -25,10 +25,10 @@ class Question extends Model
         return $this->hasMany('App\Answer');
        
     }
-    // public function getChoices($quiestion_id){
-    //     //return $answers = Answer::where('question_id',$quiestion_id)->get();
-    //     return $answers = DB::select('select * from  answers where question_id = :id', ['id' => $quiestion_id]);
-    // }
+    public function getAnswer($quiestion_id){
+        //return $answers = Answer::where('question_id',$quiestion_id)->get();
+        return $answer = DB::select('select * from  answers where question_id = :id AND is_correct=1', ['id' => $quiestion_id]);
+    }
     public function getChoices($quiestion_id){
         return $answers = Answer::where('question_id',$quiestion_id)->get();
         //return $quiestion_id;

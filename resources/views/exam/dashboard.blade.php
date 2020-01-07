@@ -78,7 +78,7 @@
                                 <i class="material-icons">add</i>
                                 <h4 class="card-title ">{{ __('Allocate Exam To Course') }}</h4>
                                 <p class="card-category"> {{ __('Add exams to courses') }}</p>
-                                <a href="{{ route('question.create') }}" class="btn btn-sm btn-primary">{{ __('ADD') }}</a>
+                                <a href="{{ route('exam.addcourse') }}" class="btn btn-sm btn-primary">{{ __('ADD') }}</a>
                             </div>
                         </div>
                     </div>
