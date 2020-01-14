@@ -91,6 +91,15 @@ class UserController extends BaseController
                 //return response()->json(['success'=>$success], $this-> successStatus); 
                 return $this->sendResponse($success, 'User Registered successfully.');
             }
+            public function logout (Request $request) {
+
+                $token = $request->user()->token();
+                $token->revoke();
+            
+                $response = 'You have been succesfully logged out!';
+                return $this->sendResponse($response, 'successfully logged out.');
+            
+            }
         /** 
              * details api 
              * 
@@ -150,6 +159,7 @@ class UserController extends BaseController
         $user->email = $request->email;
         $user->image = $request->image;
         $user->dob = $request->dob;
+        $user->gender = $request->gender;
         $user->fathers_name = $request->fathers_name;
         $user->mothers_name = $request->mothers_name;
         $user->house_name = $request->house_name;

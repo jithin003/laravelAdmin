@@ -48,13 +48,27 @@ class ExamController extends BaseController
     public function teacherExam()
     {
         $authuser = Auth::user();
-        $exams = Exam::join('exam_courses','exams.id','exam_courses.exam_id')
-                     ->join('courses','courses.id','exam_courses.course_id')
-                     ->join('users','users.id','exams.created_by')
-                     ->select('exams.id','exams.title','exam_courses.live_on','courses.course_title','exams.duration','exams.question_count','exams.correct_mark','exams.negative_mark','exams.cutoff','users.name as created_by')
-                     ->get();
+        $exams = Exam::join('users','users.id','exams.created_by')
+                    ->select('exams.id','exams.title','exams.duration','exams.question_count','exams.correct_mark','exams.negative_mark','exams.cutoff','users.name as created_by')
+                    ->get();
+        // $exams = Exam::join('exam_courses','exams.id','exam_courses.exam_id')
+        //              ->join('courses','courses.id','exam_courses.course_id')
+        //              ->join('users','users.id','exams.created_by')
+        //              ->select('exams.id','exams.title','exam_courses.live_on','courses.course_title','exams.duration','exams.question_count','exams.correct_mark','exams.negative_mark','exams.cutoff','users.name as created_by')
+        //              ->get();
         
                      return $this->sendResponse($exams, 'User Exams.');
+    }
+
+    public function examCourses($id)
+    {
+        $courses = Exam::join('exam_courses','exams.id','exam_courses.exam_id')
+                        ->join('courses','courses.id','exam_courses.course_id')
+                        ->where('exams.id','=',$id)
+                        ->select('courses.id','courses.course_title')
+                        ->get();
+                        return $this->sendResponse($courses, 'User Exams.');
+
     }
     public function storeExam(Request $request)
     {
@@ -339,7 +353,8 @@ class ExamController extends BaseController
                
                 array_push($exam_report, $data);
         }
-        return $exam_report;
+        //return $exam_report;
+        return $this->sendResponse($exam_report,'User Exam Report');
 
     }
 

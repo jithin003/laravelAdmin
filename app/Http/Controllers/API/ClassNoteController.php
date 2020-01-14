@@ -82,18 +82,18 @@ class ClassNoteController extends BaseController
         }
     }
 
-    public function deleteClassNotes(Request $request,$id)
+    public function deleteUserNotes(Request $request,$id)
     {
         $authuser = Auth::user(); 
         //return $id;
         if($authuser)
         {
-                $userNotification = User_notification::where('user_id', $authuser->id)
-                                                     ->where('notification_id',$id)
-                                                     ->delete();
+
+                $userNote = NotesContent::where('notes_id', $id)->delete();
+                $notes = Notes::where('id', $id)->delete();
          
                     //return $user;
-                    return $this->sendResponse($userNotification, 'User Notification Deleted.');
+                    return $this->sendResponse($notes, 'User Notification Deleted.');
         }
         else
         {
@@ -128,17 +128,42 @@ class ClassNoteController extends BaseController
             }
             
         }
-       
-       
-     
-       
-       
-       
-        
         return $this->sendResponse('', 'Class Notes Created .');
         //return redirect()->route('notifications')->withStatus(__('Notification Successfully Delivered.'));
 
     }
+
+    public function updateUserNotes(Request $request,$id)
+    {
+        //return $request;
+        $authuser= Auth::user();
+        if($authuser->role_id==2)
+        {
+                $new_note = Notes::find($id);
+                $new_note->title = $request->json()->get('title');
+                $new_note->description = $request->json()->get('description');
+                $new_note->created_by = $authuser->id;
+                $new_note->save();
+                $userNote = NotesContent::where('notes_id', $id)->delete();
+                foreach( $request->json()->get('content') as $content)
+                {
+                    //return $content['url'];
+                   
+                        $new_content = new NotesContent;
+                        $new_content->notes_id = $new_note->id;
+                        $new_content->url =  $content['url'];
+                        $new_content->save();
+                  
+                    
+                }
+                return $this->sendResponse($request, 'Class Notes Updated .');
+        }
+        else{
+            return $this->sendError('Class Notes Updated .');
+        }
+
+    }
+
     public function file_store(Request $request)
     {
       return $request;

@@ -297,6 +297,11 @@
                 </div>
                 <div class="tab-pane" id="settings">
                   <table class="table">
+                  <!-- 
+                    
+
+
+                   -->
                     <tbody>
                       <tr>
                         <td>

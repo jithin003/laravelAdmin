@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\User;
+
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\FCM;
 use Validator;
@@ -260,5 +261,22 @@ class NotificationController extends BaseController
     }
     return $response;
 
+    }
+
+    public function updateReadStatus()
+    {
+        $authuser = Auth::user(); 
+        $notificationUpdate =  DB::table('user_notifications')->where('user_id', $authuser->id)->update(array('is_read' => 1,'last_read' => date('Y-m-d H:i:s')));
+        return $notificationUpdate;
+    }
+
+    public function getReadStatus()
+    {
+        $authuser = Auth::user(); 
+        $notificationUpdate =  User_notification::where('user_id','=',$authuser->id)
+                                                ->where('is_read','=',0)
+                                                ->get();
+        $unread = count($notificationUpdate);
+        return $this->sendResponse($unread, 'Notification Uread Count');
     }
 }

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use App\StudentAttendance;
 use App\Attendance;
 use App\User;
+use App\Student;
+Use \Carbon\Carbon;
+use DateTime;
 use App\Http\Controllers\API\BaseController as BaseController;
 class AttendanceController extends BaseController
 {
@@ -144,6 +147,9 @@ class AttendanceController extends BaseController
     public function insertAbsent($student,$course,$date)
     {
        //$sql='select * from attendance_status where date(attendance_date)=date(?) and course_id=? ';
+       
+       //**total working days= SELECT COUNT(ast.course_id) as cnt FROM attendance_status ast WHERE ast.course_id=? AND ast.attendance_date BETWEEN date(?) AND date(?)*/
+         //**absentdays=SELECT sa.attendance_date as date FROM student_attendance sa WHERE  sa.user_id=? AND sa.attendance_date BETWEEN date(?) AND date(?) */               
                         $studentAttendance = new StudentAttendance;
                         $studentAttendance->user_id = $student->user_id;
                         $studentAttendance->course_id = $course;
@@ -151,6 +157,34 @@ class AttendanceController extends BaseController
                         $studentAttendance->save();
                         return $studentAttendance;
        
+    }
+
+    public function userAttendance($id)
+    {
+        $startData = Attendance::first();
+        $startDate = $startData->attendance_date;
+        $today = date("Y-m-d");
+        $datetime1 = date_create($today); 
+        $authuser = Auth::user();
+        $student = Student::where('user_id',$authuser->id)->get();
+        $student = $student[0];
+         $totalworkingDays = Attendance::where('course_id',$student->course_id)
+                                      ->whereBetween('attendance_date',[$startData,$datetime1])
+                                      ->count('course_id');
+         $absentDays = StudentAttendance::select('attendance_date')->where('user_id',$authuser->id)
+                                        ->whereBetween('attendance_date',[$startData,$datetime1])
+                                        ->get();
+         $totalAbsentDays = count($absentDays);
+         $response = [
+
+            'totalWorkingDays' => $totalworkingDays,
+
+            'totalAbsentDays' => $totalAbsentDays,
+            'AbsentDates'=> $absentDays
+
+        ];
+        return $this->sendResponse($response, 'Absent report.');
+
     }
 
 }
